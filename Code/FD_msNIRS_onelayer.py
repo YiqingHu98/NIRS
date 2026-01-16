@@ -1,8 +1,5 @@
 import pmcx
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import pickle
-import pandas as pd
 import math
 
 # speed of light: 
@@ -38,7 +35,7 @@ def get_onelayer_properties(hbo, hhb, cco, coef_path, a = a_default, b = b_defau
     mu_a, mu_s = compute_ua_us(hbo, hhb, cco, coef_path, a, b, lambdas, g)
     return mu_a, mu_s 
 
-def run_mcx(ua, us, g = g_default, n = n_default, distances = distance_default, tend =2e-09, devf = 1000, nphoton = 1e8, source_type='laser'):
+def run_mcx(ua, us, g = g_default, n = n_default, tend =2e-09, devf = 1000, nphoton = 1e8, source_type='laser'):
     
     prop = np.array([
         [0.0, 0.0, 1.0, 1.0], # air
@@ -128,7 +125,7 @@ def run_mcx(ua, us, g = g_default, n = n_default, distances = distance_default, 
 #     return intensity_d_list, unit
 
 def mcx_simulation(ua, us, g = g_default, n = n_default, distance = distance_default, tend =2e-09, devf = 10000, nphoton = 1e8, source_type = 'laser'):
-    res, cfg = run_mcx(ua, us, g, n, distance, tend, devf, nphoton, source_type)
+    res, cfg = run_mcx(ua, us, g, n, tend, devf, nphoton, source_type)
     reflectence_list = res['dref'][49, 49:99, 0, :]
     Fluence_list = res['flux'][49, 49:99, 1, :]
     # reflectence_list = res['dref']
@@ -159,7 +156,7 @@ def mcx_sim_onelayer(
             "mu_a": float(ua),
             "mu_s": float(us),
             "Fluence": tpsf,
-            "Reflectence" :tpsr,
+            "Reflectance": tpsr,
 
         })
 
@@ -209,4 +206,3 @@ def extract_freq(target_freq, TPSF_list, tend, devf):
         phase2_list.append(phase2)
         
     return amplitude_list, udc_list, phase_list
-
