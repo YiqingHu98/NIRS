@@ -1,9 +1,7 @@
-import pmcx
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import pickle
-import pandas as pd
 import math
+
+import numpy as np
+import pmcx
 
 # speed of light: 
 n = 1.37
@@ -186,7 +184,6 @@ def extract_freq(target_freq, TPSF_list, tend, devf):
     amplitude_list = []
     udc_list = []
     phase_list = []
-    phase2_list = []
     
     for TPSF in TPSF_list:
         TPSF = np.array(TPSF)
@@ -206,7 +203,5 @@ def extract_freq(target_freq, TPSF_list, tend, devf):
         amplitude_list.append(amplitude)
         udc_list.append(udc)
         phase_list.append(phase)
-        phase2_list.append(phase2)
         
     return amplitude_list, udc_list, phase_list
-
